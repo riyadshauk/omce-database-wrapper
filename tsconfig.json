@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "commonjs",
+    "lib": [ "esnext" ],
+    "noImplicitAny": true,
+    "removeComments": false,
+    "preserveConstEnums": true,
+    "outDir": "dist",
+    "sourceMap": true,
+    "declaration": true
+  },
+  "include": [
+    "src/**/*",
+  ]
+}

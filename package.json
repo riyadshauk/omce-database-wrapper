@@ -1,0 +1,27 @@
+{
+  "name": "omce-local-server",
+  "version": "1.0.0",
+  "description": "This is a wrapper server which can be used to wrap around back-end APIs written for deployment to Oracle's OMCe.",
+  "main": "dist/wrapper.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node dist/wrapper.js",
+    "build": "tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/riyadshauk/omce-local-server.git"
+  },
+  "author": "Riyad Shauk",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/riyadshauk/omce-local-server/issues"
+  },
+  "homepage": "https://github.com/riyadshauk/omce-local-server#readme",
+  "dependencies": {
+    "@types/express": "^4.16.1",
+    "@types/mongodb": "^3.1.23",
+    "express": "^4.16.4",
+    "mongodb": "^3.2.3"
+  }
+}
