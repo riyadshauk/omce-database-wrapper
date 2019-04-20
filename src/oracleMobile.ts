@@ -1,37 +1,40 @@
 import { MongoClient } from 'mongodb';
 import databaseWrapper from './databaseWrapper';
 
-// Connection URL
-const url = 'mongodb://127.0.0.1:27017';
+interface Request extends Express.Request {
+  oracleMobile: any;
+}
 
-// Database Name
-const dbName = 'omce-project';
+/**
+ * 
+ * @todo use seqeulize to support .sql method, then also implement the other methods
+ * 
+ * @param dbName 
+ * @param dbURL 
+ */
 
-const init = async (req, res, next) => {
+export const init = (dbName: string, dbURL: string) => async (req: Request, res: any, next: Function) => {
   try {
-    const client = await MongoClient.connect(url, { useNewUrlParser: true });
+    const client = await MongoClient.connect(dbURL, { useNewUrlParser: true });
     console.log('Connected successfully to db');
     const database = client.db(dbName);
-    // console.log('database:', Object.keys(database));
-    // console.log('client:', client);
-    // @ts-ignore
-    req.oracleMobile = {
-      database: databaseWrapper(database),
-      mongoClient: client,
+    if (Object.prototype.hasOwnProperty.call(req, 'oracleMobile')) {
+      req.oracleMobile.database = databaseWrapper(database);
+      req.oracleMobile.mongoClient = client;
+    } else {
+      req.oracleMobile = {
+        database: databaseWrapper(database),
+        mongoClient: client,
+      }
     }
     next();
   } catch (err) {
-    // console.error(err.stack);
     next(err.stack);
   }
 };
 
-const close = (req, res, next) => {
+export const close = (req: Request, res: any, next: Function) => {
+  console.log('Now closing database connection.');
   req.oracleMobile.mongoClient.close();
   next();
-};
-
-module.exports = {
-  init,
-  close,
 };
